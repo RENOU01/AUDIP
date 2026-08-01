@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-paper text-institutional-800 font-sans antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
+  }
+  :focus-visible {
+    outline: 2px solid theme('colors.pulse.500');
+    outline-offset: 2px;
+  }
+}
+
+@layer utilities {
+  .eyebrow {
+    @apply font-mono text-xs tracking-[0.2em] uppercase text-pulse-500;
+  }
+  .card-surface {
+    @apply bg-white border border-institutional-100 rounded-2xl shadow-[0_1px_2px_rgba(15,33,64,0.04)] transition-all duration-300 hover:shadow-[0_12px_32px_-8px_rgba(15,33,64,0.16)] hover:-translate-y-1 hover:border-institutional-600/20;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-2 bg-institutional-600 hover:bg-institutional-700 text-white font-medium px-6 py-3 rounded-xl transition-all duration-200 shadow-[0_4px_14px_-4px_rgba(27,58,107,0.5)] hover:shadow-[0_6px_20px_-4px_rgba(27,58,107,0.6)] active:scale-[0.98];
+  }
+  .btn-glow {
+    @apply inline-flex items-center gap-2 bg-pulse-500 hover:bg-pulse-400 text-signal-900 font-semibold px-6 py-3 rounded-xl transition-all duration-200 shadow-[0_0_24px_-4px_rgba(62,214,238,0.55)] hover:shadow-[0_0_32px_-2px_rgba(62,214,238,0.75)] active:scale-[0.98];
+  }
+}
+
+/* Resplandor radial de fondo para secciones oscuras */
+.hero-glow {
+  background-image:
+    radial-gradient(60% 50% at 50% 0%, rgba(62, 214, 238, 0.16), transparent 70%),
+    radial-gradient(40% 40% at 85% 30%, rgba(167, 139, 250, 0.12), transparent 70%);
+}
+
+/* Respeta la preferencia de reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Trazo de electrocardiograma animado (elemento de firma del sitio) */
+.waveform-path {
+  stroke-dasharray: 1400;
+  stroke-dashoffset: 1400;
+  animation: draw-wave 2.6s ease-out forwards;
+}
+@keyframes draw-wave {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Fix de íconos de marcador para react-leaflet + Vite */
+.leaflet-container {
+  font-family: Inter, sans-serif;
+  background: #E6EDF6;
+}
+.audip-marker-pin {
+  filter: drop-shadow(0 2px 4px rgba(10, 14, 26, 0.35));
+}

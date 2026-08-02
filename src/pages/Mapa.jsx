@@ -103,7 +103,7 @@ export default function Mapa() {
                   <Popup>
                     <div className="text-sm">
                       <p className="font-semibold text-institutional-800">{g.nombre}</p>
-                      <p className="text-institutional-600 mb-1">{g.departamento}</p>
+                      <p className="text-institutional-600 mb-1">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
                       {g.email && (
                         <a href={`mailto:${g.email}`} className="flex items-center gap-1 text-institutional-700 hover:underline">
                           <Mail size={12} /> {g.email}
@@ -136,7 +136,7 @@ export default function Mapa() {
                 {AREAS.find((a) => a.valor === g.area)?.etiqueta || g.area}
               </span>
               <h3 className="font-serif font-semibold text-institutional-800">{g.nombre}</h3>
-              <p className="text-sm text-institutional-600 mb-2">{g.departamento}</p>
+              <p className="text-sm text-institutional-600 mb-2">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
               {g.email && <p className="text-sm text-institutional-700">{g.email}</p>}
               {g.telefono && <p className="text-sm text-institutional-700">{g.telefono}</p>}
             </div>

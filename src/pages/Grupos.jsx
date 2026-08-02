@@ -77,7 +77,7 @@ function GrupoCard({ grupo, integrantes }) {
         <div className="flex-1">
           <h3 className="font-serif text-xl font-semibold text-institutional-800">{grupo.nombre}</h3>
           <p className="text-sm text-institutional-600">
-            {grupo.departamento}
+            {grupo.barrio ? `${grupo.barrio}, ${grupo.departamento}` : grupo.departamento}
             {grupo.fecha_fundacion && ` · Desde ${new Date(grupo.fecha_fundacion).getFullYear()}`}
             {grupo.cantidad_integrantes ? ` · ${grupo.cantidad_integrantes} integrantes` : ''}
           </p>

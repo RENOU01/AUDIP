@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { supabase } from '../../supabaseClient'
 import { subirImagen } from '../../lib/storage'
 import { AREAS, DEPARTAMENTOS, coordsDeDepartamento } from '../../lib/departamentos'
+import { BARRIOS_MONTEVIDEO, coordsDeBarrioMontevideo } from '../../lib/barriosMontevideo'
 import { Plus, Pencil, Trash2, X, Loader2 } from 'lucide-react'
 
 const vacio = {
@@ -11,11 +12,14 @@ const vacio = {
   fecha_fundacion: '',
   cantidad_integrantes: '',
   departamento: '',
+  barrio: '',
   telefono: '',
   email: '',
   investigador_a_cargo: '',
   logo_url: '',
   imagen_institucional_url: '',
+  latitud: '',
+  longitud: '',
 }
 
 export default function AdminAgrupaciones() {
@@ -48,21 +52,20 @@ export default function AdminAgrupaciones() {
       if (logoFile) logo_url = await subirImagen(logoFile, 'logos')
       if (imagenFile) imagen_institucional_url = await subirImagen(imagenFile, 'institucionales')
 
-      const coords = coordsDeDepartamento(editando.departamento)
-
       const payload = {
         nombre: editando.nombre,
         area: editando.area,
         fecha_fundacion: editando.fecha_fundacion || null,
         cantidad_integrantes: editando.cantidad_integrantes ? Number(editando.cantidad_integrantes) : null,
         departamento: editando.departamento,
+        barrio: editando.barrio || null,
         telefono: editando.telefono,
         email: editando.email,
         investigador_a_cargo: editando.investigador_a_cargo,
         logo_url,
         imagen_institucional_url,
-        latitud: coords?.lat ?? null,
-        longitud: coords?.lng ?? null,
+        latitud: editando.latitud !== '' ? Number(editando.latitud) : null,
+        longitud: editando.longitud !== '' ? Number(editando.longitud) : null,
       }
 
       if (editando.id) {
@@ -149,15 +152,61 @@ export default function AdminAgrupaciones() {
               <label className="block text-sm font-medium text-institutional-700 mb-1.5">Departamento</label>
               <select
                 value={editando.departamento}
-                onChange={(e) => setEditando({ ...editando, departamento: e.target.value })}
+                onChange={(e) => {
+                  const coords = coordsDeDepartamento(e.target.value)
+                  setEditando({
+                    ...editando,
+                    departamento: e.target.value,
+                    latitud: coords?.lat ?? editando.latitud,
+                    longitud: coords?.lng ?? editando.longitud,
+                  })
+                }}
                 required
                 className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
               >
                 <option value="" disabled>Seleccioná un departamento</option>
                 {DEPARTAMENTOS.map((d) => <option key={d.nombre} value={d.nombre}>{d.nombre}</option>)}
               </select>
-              <p className="text-xs text-institutional-500 mt-1">La ubicación en el mapa se calcula automáticamente según este departamento.</p>
+              <p className="text-xs text-institutional-500 mt-1">Al elegirlo, la ubicación en el mapa se completa sola — podés afinarla abajo con el barrio o las coordenadas exactas.</p>
             </div>
+
+            <div>
+              <label className="block text-sm font-medium text-institutional-700 mb-1.5">Barrio o zona (opcional)</label>
+              <input
+                value={editando.barrio}
+                onChange={(e) => {
+                  const nuevoBarrio = e.target.value
+                  const coordsBarrio =
+                    editando.departamento === 'Montevideo' ? coordsDeBarrioMontevideo(nuevoBarrio) : null
+                  setEditando({
+                    ...editando,
+                    barrio: nuevoBarrio,
+                    ...(coordsBarrio ? { latitud: coordsBarrio.lat, longitud: coordsBarrio.lng } : {}),
+                  })
+                }}
+                list="barrios-montevideo-datalist"
+                placeholder={editando.departamento === 'Montevideo' ? 'Ej: Pocitos, Carrasco…' : 'Ej: nombre de la zona'}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
+              />
+              {editando.departamento === 'Montevideo' && (
+                <>
+                  <datalist id="barrios-montevideo-datalist">
+                    {BARRIOS_MONTEVIDEO.map((b) => <option key={b.nombre} value={b.nombre} />)}
+                  </datalist>
+                  <p className="text-xs text-institutional-500 mt-1">
+                    Si el barrio coincide con uno de la lista sugerida, la ubicación en el mapa se ajusta sola.
+                  </p>
+                </>
+              )}
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <Campo label="Latitud (GPS)" type="number" value={editando.latitud} onChange={(v) => setEditando({ ...editando, latitud: v })} />
+              <Campo label="Longitud (GPS)" type="number" value={editando.longitud} onChange={(v) => setEditando({ ...editando, longitud: v })} />
+            </div>
+            <p className="text-xs text-institutional-500 -mt-2">
+              Tip: para una ubicación exacta, buscá la dirección en Google Maps, mantené presionado el punto en el mapa y copiá las coordenadas que aparecen (ej: -34.9011, -56.1645).
+            </p>
 
             <div className="grid grid-cols-2 gap-4">
               <Campo label="Fecha de fundación" type="date" value={editando.fecha_fundacion} onChange={(v) => setEditando({ ...editando, fecha_fundacion: v })} />

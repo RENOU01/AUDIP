@@ -31,17 +31,17 @@ export default function Home() {
     <div>
       {/* HERO */}
       <section className="relative bg-signal-900 bg-grid-faint bg-grid hero-glow text-white overflow-hidden">
-        <div className="max-w-6xl mx-auto px-5 pt-24 pb-20 text-center">
-          <img
-            src={`${import.meta.env.BASE_URL}logo-audip.jpg`}
-            alt="AUDIP — Asociación Uruguaya de Investigación Paranormal"
-            className="mx-auto w-60 sm:w-72 mb-10 rounded-2xl drop-shadow-[0_0_40px_rgba(62,214,238,0.4)]"
-          />
-          <p className="eyebrow mb-4">A.U.D.I.P.</p>
-          <h1 className="text-4xl sm:text-5xl font-semibold max-w-2xl mx-auto leading-tight tracking-tight">
-            Asociación Uruguaya de Investigación Paranormal
+        <div className="max-w-4xl mx-auto px-5 pt-28 pb-24 text-center">
+          <p className="eyebrow mb-6">Uruguay · Investigación paranormal</p>
+
+          <h1 className="font-brand font-extrabold text-5xl sm:text-7xl tracking-wide bg-gradient-to-b from-white via-pulse-400 to-pulse-600 bg-clip-text text-transparent drop-shadow-[0_0_50px_rgba(62,214,238,0.35)]">
+            AUDIP
           </h1>
-          <p className="mt-6 text-slate-300 max-w-xl mx-auto leading-relaxed text-lg">
+          <p className="mt-4 font-serif text-lg sm:text-xl text-slate-300">
+            Asociación Uruguaya de Investigación Paranormal
+          </p>
+
+          <p className="mt-8 text-slate-300 max-w-xl mx-auto leading-relaxed text-lg">
             Documentación y estudio objetivo de fenómenos paranormales en todo
             el territorio nacional.
           </p>

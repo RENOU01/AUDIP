@@ -17,7 +17,7 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
         <NavLink to="/" className="flex items-center gap-2 shrink-0" onClick={() => setOpen(false)}>
           <img src={`${import.meta.env.BASE_URL}logo-audip.jpg`} alt="AUDIP" className="h-9 w-auto" />
-          <span className="font-display font-semibold tracking-wide text-white hidden sm:inline">
+          <span className="font-brand font-bold tracking-wide text-white hidden sm:inline">
             AUDIP
           </span>
         </NavLink>

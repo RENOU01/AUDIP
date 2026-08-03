@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* QUIÉNES SOMOS */}
-      <section className="bg-paper">
+      <section className="bg-paper/85 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-5 py-16">
           <p className="eyebrow mb-3 text-institutional-600">¿Quiénes somos?</p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-institutional-800 mb-5">
@@ -114,7 +114,7 @@ export default function Home() {
       <WaveDivider tone="light" className="bg-institutional-50" />
 
       {/* CONTACTO */}
-      <section id="contacto" className="bg-institutional-50">
+      <section id="contacto" className="bg-institutional-50/85 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-5 py-16 grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-3 text-institutional-600">Contacto</p>

@@ -23,8 +23,8 @@ export default function Grupos() {
   }, [])
 
   return (
-    <div className="bg-paper min-h-[70vh]">
-      <div className="bg-white border-b-4 border-pulse-500 py-14">
+    <div className="bg-paper/85 backdrop-blur-sm min-h-[70vh]">
+      <div className="bg-white/85 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
         <div className="max-w-6xl mx-auto px-5">
           <p className="eyebrow mb-2 text-institutional-600">Nuestra gente</p>
           <h1 className="text-3xl font-semibold text-institutional-800">Grupos integrantes</h1>

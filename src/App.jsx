@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import ProtectedRoute from './components/ProtectedRoute'
+import MatrixRain from './components/MatrixRain'
 
 import Home from './pages/Home'
 import Autoridades from './pages/Autoridades'
@@ -19,6 +20,7 @@ import AdminMensajes from './pages/admin/AdminMensajes'
 export default function App() {
   return (
     <div className="min-h-screen flex flex-col">
+      <MatrixRain />
       <Navbar />
       <main className="flex-1">
         <Routes>

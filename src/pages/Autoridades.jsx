@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { supabase } from '../supabaseClient'
 import { UserCircle2 } from 'lucide-react'
-import RadarArt from '../components/RadarArt'
 
 export default function Autoridades() {
   const [autoridades, setAutoridades] = useState([])
@@ -23,11 +22,10 @@ export default function Autoridades() {
 
   return (
     <div className="bg-paper min-h-[70vh]">
-      <div className="relative bg-signal-900 bg-grid-faint bg-grid hero-glow py-16 overflow-hidden">
-        <RadarArt />
-        <div className="relative max-w-6xl mx-auto px-5">
-          <p className="eyebrow mb-2">Institucional</p>
-          <h1 className="text-3xl font-semibold text-white">Autoridades</h1>
+      <div className="bg-white border-b-4 border-pulse-500 py-14">
+        <div className="max-w-6xl mx-auto px-5">
+          <p className="eyebrow mb-2 text-institutional-600">Institucional</p>
+          <h1 className="text-3xl font-semibold text-institutional-800">Autoridades</h1>
         </div>
       </div>
 

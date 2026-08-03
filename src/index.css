@@ -62,6 +62,17 @@
   }
 }
 
+/* Barrido lento del radar decorativo del hero */
+.radar-sweep {
+  transform-origin: 400px 400px;
+  animation: radar-spin 8s linear infinite;
+}
+@keyframes radar-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Fix de íconos de marcador para react-leaflet + Vite */
 .leaflet-container {
   font-family: Inter, sans-serif;

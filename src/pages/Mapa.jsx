@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, CircleMarker, Popup } from 'react-leaflet'
 import { supabase } from '../supabaseClient'
 import { AREAS } from '../lib/departamentos'
 import { Mail, Phone } from 'lucide-react'
+import RadarArt from '../components/RadarArt'
 
 const CENTRO_URUGUAY = [-32.9, -56.0]
 
@@ -63,8 +64,9 @@ export default function Mapa() {
 
   return (
     <div className="bg-paper min-h-[70vh]">
-      <div className="bg-signal-900 bg-grid-faint bg-grid hero-glow py-16">
-        <div className="max-w-6xl mx-auto px-5">
+      <div className="relative bg-signal-900 bg-grid-faint bg-grid hero-glow py-16 overflow-hidden">
+        <RadarArt />
+        <div className="relative max-w-6xl mx-auto px-5">
           <p className="eyebrow mb-2">Cobertura nacional</p>
           <h1 className="text-3xl font-semibold text-white">Mapa de equipos de investigación</h1>
           <p className="text-slate-300 mt-3 max-w-2xl">

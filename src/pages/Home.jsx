@@ -83,7 +83,7 @@ export default function Home() {
       </section>
 
       {/* QUIÉNES SOMOS */}
-      <section className="bg-signal-900/92">
+      <section className="bg-signal-900">
         <div className="max-w-4xl mx-auto px-5 py-16">
           <p className="eyebrow mb-3">¿Quiénes somos?</p>
           <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-5">
@@ -114,7 +114,7 @@ export default function Home() {
       <WaveDivider tone="dark" className="bg-signal-900" />
 
       {/* CONTACTO */}
-      <section id="contacto" className="bg-signal-900/92">
+      <section id="contacto" className="bg-signal-900">
         <div className="max-w-6xl mx-auto px-5 py-16 grid lg:grid-cols-2 gap-12">
           <div>
             <p className="eyebrow mb-3">Contacto</p>

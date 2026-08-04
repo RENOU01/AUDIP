@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from 'react'
 
-// Fondo global de "lluvia de código" estilo Matrix, en tono azul flúor
-// acorde a la identidad de AUDIP. Vive fijo detrás de todo el contenido
-// (ver App.jsx) — las secciones de cada página usan fondos oscuros
-// semitransparentes (sin desenfoque, para no ensuciar el efecto) para
-// dejarlo entrever sin sacrificar la lectura del texto.
+// Fondo global de "lluvia de código" estilo Matrix, en azul eléctrico,
+// con palabras temáticas de AUDIP cayendo en vez de caracteres sueltos.
+// Vive fijo detrás de todo el contenido (ver App.jsx). Las secciones con
+// texto de lectura son opacas a propósito para que nunca se mezclen con
+// el efecto — el efecto se ve en los márgenes, encabezados y espacios
+// entre secciones.
 export default function MatrixRain() {
   const canvasRef = useRef(null)
 
@@ -14,10 +15,10 @@ export default function MatrixRain() {
 
     const prefiereMenosMovimiento = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    const caracteres = 'アイウエオカキクケコサシスセソ0123456789'
     const palabras = [
       'PARANORMAL', 'DEMONIOS', 'MAGIA', 'HECHICERIA', 'INVESTIGACION',
       'OVNI', 'UAP', 'RITUAL', 'FANTASMAS', 'AUDIP', 'ESPIRITU', 'PORTAL',
+      'URUGUAY', 'MISTERIO', 'PSIQUIS', 'ENTIDAD',
     ]
     const tamañoFuente = 20
     let dpr = 1
@@ -25,15 +26,17 @@ export default function MatrixRain() {
     let altoCss = 0
     let columnas = 0
     let gotas = []
-    let frameId
+    let contadorFrame = 0
+
+    function palabraAleatoria() {
+      return palabras[Math.floor(Math.random() * palabras.length)]
+    }
 
     function dimensionar() {
       dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
       anchoCss = window.innerWidth
       altoCss = window.innerHeight
 
-      // Backing store a resolución real del dispositivo (evita el desenfoque
-      // que se ve en celulares de pantalla de alta densidad).
       canvas.width = anchoCss * dpr
       canvas.height = altoCss * dpr
       canvas.style.width = anchoCss + 'px'
@@ -43,15 +46,19 @@ export default function MatrixRain() {
       columnas = Math.floor(anchoCss / tamañoFuente)
       gotas = new Array(columnas).fill(0).map(() => ({
         y: Math.random() * -40,
-        palabra: null,
+        palabra: palabraAleatoria(),
         indice: 0,
+        // cada columna cae a su propia velocidad (más lento en general)
+        velocidad: 0.28 + Math.random() * 0.35,
       }))
     }
 
+    let frameId
+
     function dibujar() {
-      // Estela: pintamos un rectángulo oscuro semi-opaco encima del cuadro
-      // anterior en vez de limpiar del todo, para que el rastro se desvanezca.
-      ctx.fillStyle = 'rgba(4, 7, 14, 0.22)'
+      contadorFrame++
+
+      ctx.fillStyle = 'rgba(4, 7, 14, 0.16)'
       ctx.fillRect(0, 0, anchoCss, altoCss)
 
       ctx.font = `700 ${tamañoFuente}px "IBM Plex Mono", monospace`
@@ -59,34 +66,38 @@ export default function MatrixRain() {
 
       for (let i = 0; i < gotas.length; i++) {
         const gota = gotas[i]
-        let char
-
-        if (gota.palabra) {
-          char = gota.palabra[gota.indice] ?? ' '
-          gota.indice++
-          if (gota.indice >= gota.palabra.length) gota.palabra = null
-        } else {
-          char = caracteres[Math.floor(Math.random() * caracteres.length)]
-        }
+        const char = gota.palabra[gota.indice] ?? ' '
 
         const x = i * tamañoFuente
         const y = gota.y * tamañoFuente
+        const esLider = gota.indice === 0
 
-        const esLider = Math.random() > 0.94
-
-        // Resplandor sutil para que el trazo se lea nítido y "neón"
-        ctx.shadowColor = '#3ED6EE'
-        ctx.shadowBlur = esLider ? 10 : 4
-        ctx.fillStyle = esLider ? '#F4FEFF' : '#4FE0F5'
-        ctx.globalAlpha = esLider ? 1 : 0.9
+        // Azul eléctrico, más oscuro y saturado que un cian claro
+        ctx.shadowColor = '#1D5FE0'
+        ctx.shadowBlur = esLider ? 7 : 3
+        ctx.fillStyle = esLider ? '#3E7BFF' : '#1D5FE0'
+        ctx.globalAlpha = esLider ? 0.95 : 0.75
         ctx.fillText(char, x, y)
 
-        if (y > altoCss && Math.random() > 0.975) {
-          gota.y = 0
-          gota.palabra = Math.random() > 0.7 ? palabras[Math.floor(Math.random() * palabras.length)] : null
-          gota.indice = 0
+        // Avance de fila cada ciertos cuadros (según la velocidad de la
+        // columna) — esto es lo que hace que la caída sea más lenta.
+        if (contadorFrame % Math.round(1 / gota.velocidad) === 0) {
+          gota.y++
+          gota.indice++
+          if (gota.indice >= gota.palabra.length) {
+            // pequeño espacio en blanco entre una palabra y la siguiente
+            if (gota.indice > gota.palabra.length + 2) {
+              gota.indice = 0
+              gota.palabra = palabraAleatoria()
+            }
+          }
         }
-        gota.y++
+
+        if (y > altoCss + tamañoFuente) {
+          gota.y = Math.random() * -20
+          gota.indice = 0
+          gota.palabra = palabraAleatoria()
+        }
       }
 
       ctx.shadowBlur = 0

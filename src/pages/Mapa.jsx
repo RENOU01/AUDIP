@@ -62,8 +62,8 @@ export default function Mapa() {
   const colorDeArea = (area) => AREAS.find((a) => a.valor === area)?.color || '#1B3A6B'
 
   return (
-    <div className="bg-signal-900/92 min-h-[70vh]">
-      <div className="bg-signal-900/85 border-b-4 border-pulse-500 py-14">
+    <div className="min-h-[70vh]">
+      <div className="bg-signal-900 border-b-4 border-pulse-500 py-14">
         <div className="max-w-6xl mx-auto px-5">
           <p className="eyebrow mb-2">Cobertura nacional</p>
           <h1 className="text-3xl font-semibold text-white">Mapa de equipos de investigación</h1>

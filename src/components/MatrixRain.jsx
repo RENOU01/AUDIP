@@ -2,8 +2,9 @@ import React, { useEffect, useRef } from 'react'
 
 // Fondo global de "lluvia de código" estilo Matrix, en tono azul flúor
 // acorde a la identidad de AUDIP. Vive fijo detrás de todo el contenido
-// (ver App.jsx) — las secciones de cada página usan fondos semitransparentes
-// para dejarlo entrever sin sacrificar la lectura del texto.
+// (ver App.jsx) — las secciones de cada página usan fondos oscuros
+// semitransparentes (sin desenfoque, para no ensuciar el efecto) para
+// dejarlo entrever sin sacrificar la lectura del texto.
 export default function MatrixRain() {
   const canvasRef = useRef(null)
 
@@ -18,28 +19,43 @@ export default function MatrixRain() {
       'PARANORMAL', 'DEMONIOS', 'MAGIA', 'HECHICERIA', 'INVESTIGACION',
       'OVNI', 'UAP', 'RITUAL', 'FANTASMAS', 'AUDIP', 'ESPIRITU', 'PORTAL',
     ]
-    const tamañoFuente = 16
+    const tamañoFuente = 20
+    let dpr = 1
+    let anchoCss = 0
+    let altoCss = 0
     let columnas = 0
     let gotas = []
     let frameId
 
     function dimensionar() {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-      columnas = Math.floor(canvas.width / tamañoFuente)
+      dpr = Math.max(1, Math.min(window.devicePixelRatio || 1, 2))
+      anchoCss = window.innerWidth
+      altoCss = window.innerHeight
+
+      // Backing store a resolución real del dispositivo (evita el desenfoque
+      // que se ve en celulares de pantalla de alta densidad).
+      canvas.width = anchoCss * dpr
+      canvas.height = altoCss * dpr
+      canvas.style.width = anchoCss + 'px'
+      canvas.style.height = altoCss + 'px'
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+      columnas = Math.floor(anchoCss / tamañoFuente)
       gotas = new Array(columnas).fill(0).map(() => ({
-        y: Math.random() * -100,
+        y: Math.random() * -40,
         palabra: null,
         indice: 0,
       }))
     }
 
     function dibujar() {
-      // Estela: en vez de limpiar, pintamos un rectángulo casi opaco encima
-      ctx.fillStyle = 'rgba(5, 8, 16, 0.15)'
-      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      // Estela: pintamos un rectángulo oscuro semi-opaco encima del cuadro
+      // anterior en vez de limpiar del todo, para que el rastro se desvanezca.
+      ctx.fillStyle = 'rgba(4, 7, 14, 0.22)'
+      ctx.fillRect(0, 0, anchoCss, altoCss)
 
-      ctx.font = `${tamañoFuente}px monospace`
+      ctx.font = `700 ${tamañoFuente}px "IBM Plex Mono", monospace`
+      ctx.textBaseline = 'top'
 
       for (let i = 0; i < gotas.length; i++) {
         const gota = gotas[i]
@@ -56,19 +72,25 @@ export default function MatrixRain() {
         const x = i * tamañoFuente
         const y = gota.y * tamañoFuente
 
-        // Carácter líder más brillante (blanco-celeste), resto en azul flúor
-        ctx.fillStyle = Math.random() > 0.95 ? '#EAFDFF' : '#3ED6EE'
-        ctx.globalAlpha = Math.random() * 0.5 + 0.4
-        ctx.fillText(char, x, y)
-        ctx.globalAlpha = 1
+        const esLider = Math.random() > 0.94
 
-        if (y > canvas.height && Math.random() > 0.975) {
+        // Resplandor sutil para que el trazo se lea nítido y "neón"
+        ctx.shadowColor = '#3ED6EE'
+        ctx.shadowBlur = esLider ? 10 : 4
+        ctx.fillStyle = esLider ? '#F4FEFF' : '#4FE0F5'
+        ctx.globalAlpha = esLider ? 1 : 0.9
+        ctx.fillText(char, x, y)
+
+        if (y > altoCss && Math.random() > 0.975) {
           gota.y = 0
           gota.palabra = Math.random() > 0.7 ? palabras[Math.floor(Math.random() * palabras.length)] : null
           gota.indice = 0
         }
         gota.y++
       }
+
+      ctx.shadowBlur = 0
+      ctx.globalAlpha = 1
 
       frameId = requestAnimationFrame(dibujar)
     }
@@ -79,7 +101,6 @@ export default function MatrixRain() {
     if (!prefiereMenosMovimiento) {
       frameId = requestAnimationFrame(dibujar)
     } else {
-      // Si el usuario prefiere menos movimiento, dibujamos un solo cuadro estático
       dibujar()
       cancelAnimationFrame(frameId)
     }
@@ -93,7 +114,7 @@ export default function MatrixRain() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed inset-0 -z-10 h-screen w-screen bg-signal-950"
+      className="fixed inset-0 -z-10 bg-signal-950"
       aria-hidden="true"
     />
   )

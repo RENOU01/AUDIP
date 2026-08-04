@@ -26,7 +26,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className="bg-white/95 backdrop-blur border-b border-slate-200 shadow-sm">
+      <div className="bg-white/95 border-b border-slate-200 shadow-sm">
         <nav className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
           <NavLink to="/" className="flex items-center gap-2 shrink-0" onClick={() => setOpen(false)}>
             <img src={`${import.meta.env.BASE_URL}logo-audip.jpg`} alt="AUDIP" className="h-9 w-auto rounded-md" />

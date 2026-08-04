@@ -21,19 +21,19 @@ export default function Autoridades() {
   }, [])
 
   return (
-    <div className="bg-paper/85 backdrop-blur-sm min-h-[70vh]">
-      <div className="bg-white/85 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
+    <div className="bg-signal-900/85 backdrop-blur-sm min-h-[70vh]">
+      <div className="bg-signal-900/70 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
         <div className="max-w-6xl mx-auto px-5">
-          <p className="eyebrow mb-2 text-institutional-600">Institucional</p>
-          <h1 className="text-3xl font-semibold text-institutional-800">Autoridades</h1>
+          <p className="eyebrow mb-2">Institucional</p>
+          <h1 className="text-3xl font-semibold text-white">Autoridades</h1>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-5 py-14">
-        {loading && <p className="text-institutional-700">Cargando autoridades…</p>}
+        {loading && <p className="text-slate-300">Cargando autoridades…</p>}
 
         {!loading && autoridades.length === 0 && (
-          <p className="text-institutional-700">
+          <p className="text-slate-300">
             Aún no hay autoridades cargadas. El administrador puede agregarlas desde el panel.
           </p>
         )}
@@ -44,11 +44,11 @@ export default function Autoridades() {
               {a.foto_url ? (
                 <img src={a.foto_url} alt={a.nombre} className="h-16 w-16 rounded-full object-cover shrink-0" />
               ) : (
-                <UserCircle2 size={64} className="text-institutional-100 shrink-0" strokeWidth={1} />
+                <UserCircle2 size={64} className="text-signal-700 shrink-0" strokeWidth={1} />
               )}
               <div>
-                <h3 className="font-serif font-semibold text-institutional-800">{a.nombre}</h3>
-                <p className="text-sm text-institutional-600">{a.cargo}</p>
+                <h3 className="font-serif font-semibold text-white">{a.nombre}</h3>
+                <p className="text-sm text-slate-400">{a.cargo}</p>
               </div>
             </div>
           ))}

@@ -89,7 +89,7 @@ export default function ContactForm() {
       <div className="grid sm:grid-cols-2 gap-4">
         <Campo label="Correo electrónico" name="email" value={form.email} onChange={onChange} required type="email" />
         <div>
-          <label className="block text-sm font-medium text-institutional-700 mb-1.5" htmlFor="departamento">
+          <label className="block text-sm font-medium text-slate-300 mb-1.5" htmlFor="departamento">
             Departamento
           </label>
           <select
@@ -98,7 +98,7 @@ export default function ContactForm() {
             value={form.departamento}
             onChange={onChange}
             required
-            className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none"
+            className="w-full rounded-lg border border-signal-700 bg-signal-900/60 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none"
           >
             <option value="" disabled>Seleccioná tu departamento</option>
             {DEPARTAMENTOS.map((d) => (
@@ -109,7 +109,7 @@ export default function ContactForm() {
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-institutional-700 mb-1.5" htmlFor="mensaje">
+        <label className="block text-sm font-medium text-slate-300 mb-1.5" htmlFor="mensaje">
           Motivo de contacto
         </label>
         <textarea
@@ -120,7 +120,7 @@ export default function ContactForm() {
           required
           rows={5}
           placeholder="Contanos tu consulta o el fenómeno que querés reportar…"
-          className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none resize-y"
+          className="w-full rounded-lg border border-signal-700 bg-signal-900/60 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none resize-y"
         />
       </div>
 
@@ -134,12 +134,12 @@ export default function ContactForm() {
       </button>
 
       {estado === 'ok' && (
-        <p className="flex items-center gap-2 text-sm text-emerald-700">
+        <p className="flex items-center gap-2 text-sm text-emerald-400">
           <CheckCircle2 size={16} /> Mensaje enviado. Te vamos a responder a la brevedad.
         </p>
       )}
       {estado === 'error' && (
-        <p className="flex items-center gap-2 text-sm text-red-700">
+        <p className="flex items-center gap-2 text-sm text-red-400">
           <AlertCircle size={16} /> Ocurrió un error al enviar. Probá de nuevo o escribinos directamente a audipuruguay@gmail.com.
         </p>
       )}
@@ -150,7 +150,7 @@ export default function ContactForm() {
 function Campo({ label, name, value, onChange, type = 'text', required }) {
   return (
     <div>
-      <label className="block text-sm font-medium text-institutional-700 mb-1.5" htmlFor={name}>
+      <label className="block text-sm font-medium text-slate-300 mb-1.5" htmlFor={name}>
         {label}
       </label>
       <input
@@ -160,7 +160,7 @@ function Campo({ label, name, value, onChange, type = 'text', required }) {
         value={value}
         onChange={onChange}
         required={required}
-        className="w-full rounded-lg border border-slate-300 bg-white px-3 py-2.5 text-sm focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none"
+        className="w-full rounded-lg border border-signal-700 bg-signal-900/60 px-3 py-2.5 text-sm text-white placeholder:text-slate-500 focus:border-pulse-500 focus:ring-1 focus:ring-pulse-500 outline-none"
       />
     </div>
   )

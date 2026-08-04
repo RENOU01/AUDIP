@@ -23,16 +23,16 @@ export default function Grupos() {
   }, [])
 
   return (
-    <div className="bg-paper/85 backdrop-blur-sm min-h-[70vh]">
-      <div className="bg-white/85 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
+    <div className="bg-signal-900/85 backdrop-blur-sm min-h-[70vh]">
+      <div className="bg-signal-900/70 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
         <div className="max-w-6xl mx-auto px-5">
-          <p className="eyebrow mb-2 text-institutional-600">Nuestra gente</p>
-          <h1 className="text-3xl font-semibold text-institutional-800">Grupos integrantes</h1>
+          <p className="eyebrow mb-2">Nuestra gente</p>
+          <h1 className="text-3xl font-semibold text-white">Grupos integrantes</h1>
         </div>
       </div>
 
       <div className="max-w-6xl mx-auto px-5 py-14 space-y-16">
-        {loading && <p className="text-institutional-700">Cargando grupos…</p>}
+        {loading && <p className="text-slate-300">Cargando grupos…</p>}
 
         {!loading && AREAS.map((area) => {
           const grupos = agrupaciones.filter((g) => g.area === area.valor)
@@ -41,7 +41,7 @@ export default function Grupos() {
             <div key={area.valor}>
               <div className="flex items-center gap-3 mb-6">
                 <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: area.color }} />
-                <h2 className="text-2xl font-semibold text-institutional-800">{area.etiqueta}</h2>
+                <h2 className="text-2xl font-semibold text-white">{area.etiqueta}</h2>
               </div>
 
               <div className="space-y-8">
@@ -54,7 +54,7 @@ export default function Grupos() {
         })}
 
         {!loading && agrupaciones.length === 0 && (
-          <p className="text-institutional-700">
+          <p className="text-slate-300">
             Todavía no hay grupos cargados. El administrador puede agregarlos desde el panel.
           </p>
         )}
@@ -68,15 +68,15 @@ function GrupoCard({ grupo, integrantes }) {
     <div className="card-surface p-6 sm:p-8">
       <div className="flex flex-col sm:flex-row sm:items-center gap-5 mb-6">
         {grupo.logo_url ? (
-          <img src={grupo.logo_url} alt={`Logo de ${grupo.nombre}`} className="h-16 w-16 rounded-lg object-cover border border-institutional-100" />
+          <img src={grupo.logo_url} alt={`Logo de ${grupo.nombre}`} className="h-16 w-16 rounded-lg object-cover border border-signal-700" />
         ) : (
-          <div className="h-16 w-16 rounded-lg bg-institutional-50 flex items-center justify-center text-institutional-600">
+          <div className="h-16 w-16 rounded-lg bg-signal-700/50 flex items-center justify-center text-slate-400">
             <Users size={26} />
           </div>
         )}
         <div className="flex-1">
-          <h3 className="font-serif text-xl font-semibold text-institutional-800">{grupo.nombre}</h3>
-          <p className="text-sm text-institutional-600">
+          <h3 className="font-serif text-xl font-semibold text-white">{grupo.nombre}</h3>
+          <p className="text-sm text-slate-400">
             {grupo.barrio ? `${grupo.barrio}, ${grupo.departamento}` : grupo.departamento}
             {grupo.fecha_fundacion && ` · Desde ${new Date(grupo.fecha_fundacion).getFullYear()}`}
             {grupo.cantidad_integrantes ? ` · ${grupo.cantidad_integrantes} integrantes` : ''}
@@ -99,9 +99,9 @@ function GrupoCard({ grupo, integrantes }) {
               {i.foto_url ? (
                 <img src={i.foto_url} alt={`${i.nombre} ${i.apellido}`} className="h-20 w-20 mx-auto rounded-full object-cover mb-2" />
               ) : (
-                <UserCircle2 size={80} className="mx-auto text-institutional-100 mb-2" strokeWidth={1} />
+                <UserCircle2 size={80} className="mx-auto text-signal-700 mb-2" strokeWidth={1} />
               )}
-              <p className="text-sm font-medium text-institutional-800">{i.nombre} {i.apellido}</p>
+              <p className="text-sm font-medium text-white">{i.nombre} {i.apellido}</p>
             </div>
           ))}
         </div>

@@ -62,12 +62,12 @@ export default function Mapa() {
   const colorDeArea = (area) => AREAS.find((a) => a.valor === area)?.color || '#1B3A6B'
 
   return (
-    <div className="bg-paper/85 backdrop-blur-sm min-h-[70vh]">
-      <div className="bg-white/85 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
+    <div className="bg-signal-900/85 backdrop-blur-sm min-h-[70vh]">
+      <div className="bg-signal-900/70 backdrop-blur-sm border-b-4 border-pulse-500 py-14">
         <div className="max-w-6xl mx-auto px-5">
-          <p className="eyebrow mb-2 text-institutional-600">Cobertura nacional</p>
-          <h1 className="text-3xl font-semibold text-institutional-800">Mapa de equipos de investigación</h1>
-          <p className="text-institutional-600 mt-3 max-w-2xl">
+          <p className="eyebrow mb-2">Cobertura nacional</p>
+          <h1 className="text-3xl font-semibold text-white">Mapa de equipos de investigación</h1>
+          <p className="text-slate-400 mt-3 max-w-2xl">
             Ubicación de los equipos activos de AUDIP en el territorio uruguayo.
           </p>
         </div>
@@ -85,7 +85,7 @@ export default function Mapa() {
           ))}
         </div>
 
-        <div className="rounded-2xl overflow-hidden border border-institutional-100 shadow-sm">
+        <div className="rounded-2xl overflow-hidden border border-signal-700 shadow-sm">
           <MapContainer center={CENTRO_URUGUAY} zoom={7} scrollWheelZoom={false} style={{ height: '520px', width: '100%' }}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -102,15 +102,15 @@ export default function Mapa() {
                 >
                   <Popup>
                     <div className="text-sm">
-                      <p className="font-semibold text-institutional-800">{g.nombre}</p>
-                      <p className="text-institutional-600 mb-1">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
+                      <p className="font-semibold text-white">{g.nombre}</p>
+                      <p className="text-slate-400 mb-1">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
                       {g.email && (
-                        <a href={`mailto:${g.email}`} className="flex items-center gap-1 text-institutional-700 hover:underline">
+                        <a href={`mailto:${g.email}`} className="flex items-center gap-1 text-slate-300 hover:underline">
                           <Mail size={12} /> {g.email}
                         </a>
                       )}
                       {g.telefono && (
-                        <a href={`tel:${g.telefono}`} className="flex items-center gap-1 text-institutional-700 hover:underline">
+                        <a href={`tel:${g.telefono}`} className="flex items-center gap-1 text-slate-300 hover:underline">
                           <Phone size={12} /> {g.telefono}
                         </a>
                       )}
@@ -122,7 +122,7 @@ export default function Mapa() {
         </div>
 
         {!loading && grupoVisible.length === 0 && (
-          <p className="text-institutional-700 mt-6">No hay equipos cargados para este filtro todavía.</p>
+          <p className="text-slate-300 mt-6">No hay equipos cargados para este filtro todavía.</p>
         )}
 
         {/* Listado accesible en texto, para quienes no puedan usar el mapa */}
@@ -135,10 +135,10 @@ export default function Mapa() {
               >
                 {AREAS.find((a) => a.valor === g.area)?.etiqueta || g.area}
               </span>
-              <h3 className="font-serif font-semibold text-institutional-800">{g.nombre}</h3>
-              <p className="text-sm text-institutional-600 mb-2">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
-              {g.email && <p className="text-sm text-institutional-700">{g.email}</p>}
-              {g.telefono && <p className="text-sm text-institutional-700">{g.telefono}</p>}
+              <h3 className="font-serif font-semibold text-white">{g.nombre}</h3>
+              <p className="text-sm text-slate-400 mb-2">{g.barrio ? `${g.barrio}, ${g.departamento}` : g.departamento}</p>
+              {g.email && <p className="text-sm text-slate-300">{g.email}</p>}
+              {g.telefono && <p className="text-sm text-slate-300">{g.telefono}</p>}
             </div>
           ))}
         </div>
@@ -154,7 +154,7 @@ function FiltroBtn({ children, activo, onClick, color }) {
       className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-colors ${
         activo
           ? 'bg-institutional-600 border-institutional-600 text-white'
-          : 'bg-white border-institutional-100 text-institutional-700 hover:border-institutional-600'
+          : 'bg-signal-800/60 border-signal-700 text-slate-300 hover:border-pulse-500/50'
       }`}
       style={activo && color ? { backgroundColor: color, borderColor: color } : undefined}
     >

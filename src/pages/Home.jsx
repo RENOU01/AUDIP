@@ -85,11 +85,11 @@ export default function Home() {
       {/* QUIÉNES SOMOS */}
       <section className="bg-paper/85 backdrop-blur-sm">
         <div className="max-w-4xl mx-auto px-5 py-16">
-          <p className="eyebrow mb-3 text-institutional-600">¿Quiénes somos?</p>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-institutional-800 mb-5">
+          <p className="eyebrow mb-3">¿Quiénes somos?</p>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-5">
             Ciencia, técnica y contención al servicio de quienes nos necesitan
           </h2>
-          <p className="text-institutional-700 leading-relaxed text-[1.05rem]">
+          <p className="text-slate-300 leading-relaxed text-[1.05rem]">
             Somos una asociación sin fines de lucro, formada por profesionales,
             técnicos e investigadores paranormales, abocada a la documentación
             y estudio objetivo de fenómenos paranormales. Nuestra misión
@@ -101,41 +101,41 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-5 pb-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {ejes.map(({ icon: Icon, titulo, texto }) => (
             <div key={titulo} className="card-surface p-6">
-              <div className="h-11 w-11 rounded-xl bg-institutional-50 flex items-center justify-center mb-4">
-                <Icon size={20} className="text-institutional-600" />
+              <div className="h-11 w-11 rounded-xl bg-signal-700/50 flex items-center justify-center mb-4">
+                <Icon size={20} className="text-pulse-400" />
               </div>
-              <h3 className="font-serif font-semibold text-institutional-800 mb-2">{titulo}</h3>
-              <p className="text-sm text-institutional-700/80 leading-relaxed">{texto}</p>
+              <h3 className="font-serif font-semibold text-white mb-2">{titulo}</h3>
+              <p className="text-sm text-slate-300/80 leading-relaxed">{texto}</p>
             </div>
           ))}
         </div>
       </section>
 
-      <WaveDivider tone="light" className="bg-institutional-50" />
+      <WaveDivider tone="dark" className="bg-signal-900" />
 
       {/* CONTACTO */}
-      <section id="contacto" className="bg-institutional-50/85 backdrop-blur-sm">
+      <section id="contacto" className="bg-signal-900/85 backdrop-blur-sm">
         <div className="max-w-6xl mx-auto px-5 py-16 grid lg:grid-cols-2 gap-12">
           <div>
-            <p className="eyebrow mb-3 text-institutional-600">Contacto</p>
-            <h2 className="text-2xl sm:text-3xl font-semibold text-institutional-800 mb-6">
+            <p className="eyebrow mb-3">Contacto</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
               ¿Alguna pregunta?
             </h2>
-            <p className="text-institutional-700 leading-relaxed mb-8">
+            <p className="text-slate-300 leading-relaxed mb-8">
               Envianos un mensaje para obtener más información, reportar un
               fenómeno o solicitar el apoyo de uno de nuestros equipos.
             </p>
-            <ul className="space-y-3 text-institutional-800">
+            <ul className="space-y-3 text-white">
               <li className="flex items-center gap-3">
-                <Mail size={18} className="text-institutional-600" />
+                <Mail size={18} className="text-pulse-400" />
                 <a href="mailto:audipuruguay@gmail.com" className="hover:underline">audipuruguay@gmail.com</a>
               </li>
               <li className="flex items-center gap-3">
-                <Phone size={18} className="text-institutional-600" />
+                <Phone size={18} className="text-pulse-400" />
                 <a href="tel:+59894724347" className="hover:underline">+598 94 724 347</a>
               </li>
               <li className="flex items-center gap-3">
-                <MapPin size={18} className="text-institutional-600" />
+                <MapPin size={18} className="text-pulse-400" />
                 Montevideo, Uruguay
               </li>
             </ul>

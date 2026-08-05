@@ -15,6 +15,7 @@ import AdminLayout from './pages/admin/AdminLayout'
 import AdminAgrupaciones from './pages/admin/AdminAgrupaciones'
 import AdminIntegrantes from './pages/admin/AdminIntegrantes'
 import AdminAutoridades from './pages/admin/AdminAutoridades'
+import AdminCarrusel from './pages/admin/AdminCarrusel'
 import AdminMensajes from './pages/admin/AdminMensajes'
 
 export default function App() {
@@ -41,6 +42,7 @@ export default function App() {
             <Route index element={<AdminAgrupaciones />} />
             <Route path="integrantes" element={<AdminIntegrantes />} />
             <Route path="autoridades" element={<AdminAutoridades />} />
+            <Route path="carrusel" element={<AdminCarrusel />} />
             <Route path="mensajes" element={<AdminMensajes />} />
           </Route>
         </Routes>

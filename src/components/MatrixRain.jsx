@@ -48,8 +48,8 @@ export default function MatrixRain() {
         y: Math.random() * -40,
         palabra: palabraAleatoria(),
         indice: 0,
-        // cada columna cae a su propia velocidad (más lento en general)
-        velocidad: 0.28 + Math.random() * 0.35,
+        // cada columna cae a su propia velocidad (bastante más lenta)
+        velocidad: 0.08 + Math.random() * 0.12,
       }))
     }
 

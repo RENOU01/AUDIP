@@ -32,6 +32,7 @@ const ejes = [
 
 export default function Home() {
   const [stats, setStats] = useState({ grupos: null, departamentos: null })
+  const [imagenesCarrusel, setImagenesCarrusel] = useState(IMAGENES_HERO)
 
   useEffect(() => {
     let activo = true
@@ -43,6 +44,18 @@ export default function Home() {
         const departamentos = new Set(data.map((g) => g.departamento))
         setStats({ grupos: data.length, departamentos: departamentos.size })
       })
+
+    supabase
+      .from('carrusel_imagenes')
+      .select('url')
+      .order('orden', { ascending: true })
+      .then(({ data, error }) => {
+        if (!activo) return
+        if (!error && data && data.length > 0) {
+          setImagenesCarrusel(data.map((row) => row.url))
+        }
+      })
+
     return () => { activo = false }
   }, [])
 
@@ -50,18 +63,13 @@ export default function Home() {
     <div>
       {/* HERO */}
       <section className="relative">
-        <ImageCarousel images={IMAGENES_HERO}>
+        <ImageCarousel images={imagenesCarrusel}>
           <div className="text-center text-white max-w-3xl">
-            <p className="eyebrow mb-5">Uruguay · Investigación paranormal</p>
             <h1 className="font-brand font-extrabold text-4xl sm:text-6xl tracking-wide text-white drop-shadow-[0_2px_20px_rgba(0,0,0,0.6)]">
               AUDIP
             </h1>
             <p className="mt-3 font-serif text-lg sm:text-xl text-slate-200">
               Asociación Uruguaya de Investigación Paranormal
-            </p>
-            <p className="mt-6 text-slate-200 max-w-xl mx-auto leading-relaxed text-base sm:text-lg">
-              Documentación y estudio objetivo de fenómenos paranormales en todo
-              el territorio nacional.
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
               <a href="#contacto" className="btn-glow">Contactanos</a>
@@ -83,19 +91,21 @@ export default function Home() {
       </section>
 
       {/* QUIÉNES SOMOS */}
-      <section className="bg-signal-900">
+      <section>
         <div className="max-w-4xl mx-auto px-5 py-16">
-          <p className="eyebrow mb-3">¿Quiénes somos?</p>
-          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-5">
-            Ciencia, técnica y contención al servicio de quienes nos necesitan
-          </h2>
-          <p className="text-slate-300 leading-relaxed text-[1.05rem]">
-            Somos una asociación sin fines de lucro, formada por profesionales,
-            técnicos e investigadores paranormales, abocada a la documentación
-            y estudio objetivo de fenómenos paranormales. Nuestra misión
-            principal es la ayuda a las familias que sufren de estos
-            fenómenos y no encuentran una solución.
-          </p>
+          <div className="card-surface p-6 sm:p-10">
+            <p className="eyebrow mb-3">¿Quiénes somos?</p>
+            <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-5">
+              Ciencia, técnica y contención al servicio de quienes nos necesitan
+            </h2>
+            <p className="text-slate-300 leading-relaxed text-[1.05rem]">
+              Somos una asociación sin fines de lucro, formada por profesionales,
+              técnicos e investigadores paranormales, abocada a la documentación
+              y estudio objetivo de fenómenos paranormales. Nuestra misión
+              principal es la ayuda a las familias que sufren de estos
+              fenómenos y no encuentran una solución.
+            </p>
+          </div>
         </div>
 
         <div className="max-w-6xl mx-auto px-5 pb-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -111,12 +121,12 @@ export default function Home() {
         </div>
       </section>
 
-      <WaveDivider tone="dark" className="bg-signal-900" />
+      <WaveDivider tone="dark" />
 
       {/* CONTACTO */}
-      <section id="contacto" className="bg-signal-900">
+      <section id="contacto">
         <div className="max-w-6xl mx-auto px-5 py-16 grid lg:grid-cols-2 gap-12">
-          <div>
+          <div className="card-surface p-6 sm:p-10">
             <p className="eyebrow mb-3">Contacto</p>
             <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6">
               ¿Alguna pregunta?

@@ -1,12 +1,13 @@
 import React from 'react'
 import { NavLink, Outlet } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-import { LogOut, Users, UserSquare2, MapPinned, Inbox } from 'lucide-react'
+import { LogOut, Users, UserSquare2, MapPinned, Inbox, Images } from 'lucide-react'
 
 const tabs = [
   { to: '/admin', end: true, label: 'Agrupaciones', icon: MapPinned },
   { to: '/admin/integrantes', label: 'Integrantes', icon: Users },
   { to: '/admin/autoridades', label: 'Autoridades', icon: UserSquare2 },
+  { to: '/admin/carrusel', label: 'Fotos del carrusel', icon: Images },
   { to: '/admin/mensajes', label: 'Mensajes', icon: Inbox },
 ]
 

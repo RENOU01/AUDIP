@@ -3,10 +3,11 @@ import { supabase } from '../../supabaseClient'
 import { subirImagen } from '../../lib/storage'
 import { Plus, Pencil, Trash2, X, Loader2, UserCircle2 } from 'lucide-react'
 
-const vacio = { id: null, nombre: '', cargo: '', orden: 0, foto_url: '' }
+const vacio = { id: null, nombre: '', cargo: '', orden: 0, foto_url: '', investigador_id: '' }
 
 export default function AdminAutoridades() {
   const [autoridades, setAutoridades] = useState([])
+  const [integrantes, setIntegrantes] = useState([])
   const [loading, setLoading] = useState(true)
   const [editando, setEditando] = useState(null)
   const [guardando, setGuardando] = useState(false)
@@ -14,12 +15,31 @@ export default function AdminAutoridades() {
 
   const cargar = async () => {
     setLoading(true)
-    const { data, error } = await supabase.from('autoridades').select('*').order('orden')
-    if (!error) setAutoridades(data || [])
+    const [resAut, resInv] = await Promise.all([
+      supabase.from('autoridades').select('*').order('orden'),
+      supabase.from('investigadores').select('id, nombre, apellido, foto_url').order('apellido'),
+    ])
+    if (!resAut.error) setAutoridades(resAut.data || [])
+    if (!resInv.error) setIntegrantes(resInv.data || [])
     setLoading(false)
   }
 
   useEffect(() => { cargar() }, [])
+
+  const vincularIntegrante = (id) => {
+    if (!id) {
+      setEditando({ ...editando, investigador_id: '' })
+      return
+    }
+    const integrante = integrantes.find((i) => i.id === id)
+    setEditando({
+      ...editando,
+      investigador_id: id,
+      nombre: integrante ? `${integrante.nombre} ${integrante.apellido}` : editando.nombre,
+      foto_url: integrante?.foto_url || editando.foto_url,
+    })
+    setFotoFile(null)
+  }
 
   const guardar = async (e) => {
     e.preventDefault()
@@ -33,6 +53,7 @@ export default function AdminAutoridades() {
         cargo: editando.cargo,
         orden: Number(editando.orden) || 0,
         foto_url,
+        investigador_id: editando.investigador_id || null,
       }
 
       if (editando.id) {
@@ -94,13 +115,30 @@ export default function AdminAutoridades() {
       )}
 
       {editando && (
-        <div className="fixed inset-0 bg-signal-900/60 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div className="fixed inset-0 bg-signal-900/60 flex items-start justify-center p-4 pt-8 z-50 overflow-y-auto">
           <form onSubmit={guardar} className="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-md my-8 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-institutional-800">
                 {editando.id ? 'Editar autoridad' : 'Nueva autoridad'}
               </h3>
               <button type="button" onClick={() => setEditando(null)} className="text-institutional-500"><X size={20} /></button>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-institutional-700 mb-1.5">Vincular con un integrante (opcional)</label>
+              <select
+                value={editando.investigador_id || ''}
+                onChange={(e) => vincularIntegrante(e.target.value)}
+                className="w-full rounded-lg border border-slate-300 px-3 py-2.5 text-sm"
+              >
+                <option value="">— Cargar nombre y foto a mano —</option>
+                {integrantes.map((i) => (
+                  <option key={i.id} value={i.id}>{i.nombre} {i.apellido}</option>
+                ))}
+              </select>
+              <p className="text-xs text-institutional-500 mt-1">
+                Si elegís a alguien de la lista, el nombre y la foto se completan solos desde su ficha de integrante (los podés seguir editando abajo si hace falta).
+              </p>
             </div>
 
             <div>

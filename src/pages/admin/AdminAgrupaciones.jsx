@@ -126,7 +126,7 @@ export default function AdminAgrupaciones() {
       )}
 
       {editando && (
-        <div className="fixed inset-0 bg-signal-900/60 flex items-center justify-center p-4 z-50 overflow-y-auto">
+        <div className="fixed inset-0 bg-signal-900/60 flex items-start justify-center p-4 pt-8 z-50 overflow-y-auto">
           <form onSubmit={guardar} className="bg-white rounded-2xl p-6 sm:p-8 w-full max-w-lg my-8 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-lg font-semibold text-institutional-800">
